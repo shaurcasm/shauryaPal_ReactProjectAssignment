@@ -1,5 +1,5 @@
 export default interface IMovie {
-    id: string,
+    id?: string,
     title: string,
     year: string,
     genres: Array<string>,

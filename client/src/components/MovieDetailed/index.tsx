@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Container, Spinner, Alert } from 'react-bootstrap';
-import { useParams, useLocation } from 'react-router-dom';
+import { Container, Spinner, Alert, Button } from 'react-bootstrap';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 
 import { Categories } from '../../models/ICategory';
 import IMovie from '../../models/IMovie';
@@ -17,6 +17,9 @@ const MovieDetailed = () => {
     const location = useLocation();
     const state = location.state as LocationState;
     const { category = Categories.MoviesComing } = state || {};
+
+    const navigation = useNavigate();
+    const goBack = () => navigation(-1);
 
     const [movie, setMovie] = useState<IMovie | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -39,10 +42,10 @@ const MovieDetailed = () => {
     }, [category, id]);
 
     return (
-        <Container fluid className='h-100'>
+        <Container fluid className='h-100 d-flex flex-column justify-content-center align-items-center'>
             {
                 loading &&
-                <Spinner animation="border" role="status">
+                <Spinner animation="border" role="status" className="my-4">
                     <span className="visually-hidden">Loading...</span>
                 </Spinner>
             }
@@ -53,7 +56,16 @@ const MovieDetailed = () => {
             }
             {
                 !loading && !error && movie &&
-                <MovieCard movie={movie} fullPage />
+                <>
+                    <Button
+                        className="my-4 align-self-start"
+                        onClick={goBack}
+                        variant="primary"
+                    >
+                        Back
+                    </Button>
+                    <MovieCard movie={movie} fullPage />
+                </>
             }
         </Container>
     )

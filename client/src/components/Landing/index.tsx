@@ -46,22 +46,22 @@ export default function Landing() {
         <Tabs
             defaultActiveKey={Categories.MoviesComing}
             id='landing-page-tab'
-            className='mb-3 px-3'
+            className='mb-3 px-3 d-flex justify-content-evenly bg-light'
         >
             <Tab eventKey={Categories.MoviesComing} title='Coming Soon'>
-                <Movies category={Categories.MoviesComing} favourites={favourites} setFavourites={setFavourites} />
+                <Movies category={Categories.MoviesComing} favourites={favourites} setFavourites={setFavourites} fetchFavourites={fetchFavourites} />
             </Tab>
             <Tab eventKey={Categories.MoviesInTheaters} title='In Theatres'>
-                <Movies category={Categories.MoviesInTheaters} favourites={favourites} setFavourites={setFavourites} />
+                <Movies category={Categories.MoviesInTheaters} favourites={favourites} setFavourites={setFavourites} fetchFavourites={fetchFavourites} />
             </Tab>
             <Tab eventKey={Categories.TopRatedIndia} title='Top Rated In India'>
-                <Movies category={Categories.TopRatedIndia} favourites={favourites} setFavourites={setFavourites} />
+                <Movies category={Categories.TopRatedIndia} favourites={favourites} setFavourites={setFavourites} fetchFavourites={fetchFavourites} />
             </Tab>
             <Tab eventKey={Categories.TopRatedMovies} title='Top Rated'>
-                <Movies category={Categories.TopRatedMovies} favourites={favourites} setFavourites={setFavourites} />
+                <Movies category={Categories.TopRatedMovies} favourites={favourites} setFavourites={setFavourites} fetchFavourites={fetchFavourites} />
             </Tab>
             <Tab eventKey={Categories.Favourite} title='Favourites'>
-                <Movies category={Categories.Favourite} favourites={favourites} setFavourites={setFavourites} />
+                <Movies category={Categories.Favourite} favourites={favourites} setFavourites={setFavourites} fetchFavourites={fetchFavourites} />
             </Tab>
         </Tabs>
     )

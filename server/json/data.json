@@ -34493,5 +34493,62 @@
       "posterurl": "https://images-na.ssl-images-amazon.com/images/M/MV5BNjI3NjY1Mjg3MV5BMl5BanBnXkFtZTgwMzk5MDQ3MjE@._V1_SY500_CR0,0,340,500_AL_.jpg"
     }
   ],
-  "favourite": []
+  "favourite": [
+    {
+      "title": "Wake Up Sid",
+      "year": "2009",
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Romance"
+      ],
+      "ratings": [
+        3,
+        6,
+        7,
+        10,
+        6,
+        7,
+        3,
+        3,
+        1,
+        4,
+        10,
+        2,
+        6,
+        3,
+        6,
+        1,
+        6,
+        7,
+        8,
+        4,
+        10,
+        9,
+        10,
+        4,
+        6,
+        2,
+        5,
+        6,
+        2,
+        4
+      ],
+      "poster": "MV5BMTg2NTk2MjU5NV5BMl5BanBnXkFtZTcwNTY0Nzg4Mg@@._V1_SY489_SX324_AL_.jpg",
+      "contentRating": "",
+      "duration": "PT138M",
+      "releaseDate": "2009-10-02",
+      "averageRating": 0,
+      "originalTitle": "",
+      "storyline": "In Mumbai, Sid Mehra is, in the words of his father, an arrogant, spoiled brat. He lives with a doting mother, subservient brother, and a father who covers his expenses and credit card bills. Sid takes his college finals then starts work at his father's business; he lasts less than a week before walking out. At a graduation party, he meets Aisha, newly arrived from Calcutta and set on becoming a writer. He shows her the city and helps her refurbish a rented flat. He asks if she'd like to progress from friend to something more, but she says no: he lacks ambition and isn't her type. Will her words, his exam results, a confrontation with his parents, and a break with his friends be enough to wake Sid up?                Written by\n<jhailey@hotmail.com>",
+      "actors": [
+        "Ranbir Kapoor",
+        "Konkona Sen Sharma",
+        "Supriya Pathak"
+      ],
+      "imdbRating": 7.6,
+      "posterurl": "https://images-na.ssl-images-amazon.com/images/M/MV5BMTg2NTk2MjU5NV5BMl5BanBnXkFtZTcwNTY0Nzg4Mg@@._V1_SY489_SX324_AL_.jpg",
+      "id": 2
+    }
+  ]
 }

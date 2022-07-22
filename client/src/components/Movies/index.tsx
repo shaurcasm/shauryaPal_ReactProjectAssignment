@@ -9,16 +9,17 @@ import MovieCard from '../MovieCard';
 interface Props extends ICategory {
     favourites: IMovie[],
     setFavourites: (movies : IMovie[] | ((movies : IMovie[]) => IMovie[])) => void,
+    fetchFavourites: () => void,
 }
 const Movies = (props : Props) => {
-    const { category, favourites, setFavourites } = props;
+    const { category, favourites, setFavourites, fetchFavourites } = props;
 
     const [movies, setMovies] = useState<IMovie[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
 
-    const isFavourite = useCallback((id: string | number) => {
-        return favourites.some(fav => fav.id === id);
+    const isFavourite = useCallback((title: string) => {
+        return favourites.some(fav => fav.title === title);
     }, [favourites]);
 
     useEffect(() => {
@@ -67,7 +68,7 @@ const Movies = (props : Props) => {
                         movies.length > 0 &&
                         movies.map(movie => (
                             <Col key={movie.id} className="py-3">
-                                <MovieCard movie={movie} isFavourite={isFavourite(movie.id)} setFavourites={setFavourites} />
+                                <MovieCard movie={movie} isFavourite={isFavourite(movie.title)} setFavourites={setFavourites} fetchFavourites={fetchFavourites} />
                             </Col>
                         ))
                     }

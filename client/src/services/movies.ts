@@ -1,5 +1,5 @@
 import axios from 'axios';
-import IMovie, {  } from '../models/IMovie';
+import IMovie, { IMovieWithoutId } from '../models/IMovie';
 import { Categories } from '../models/ICategory';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
@@ -31,7 +31,7 @@ async function getMovies(category: Categories): Promise<IMovie[]> {
  * @param movie 
  * @returns 
  */
-async function addMovieToFavourite(movie : IMovie) {
+async function addMovieToFavourite(movie : IMovieWithoutId) {
     const response = await axios.post<IMovie>(
         `${baseURL}/${Categories.Favourite}`,
         movie,
