@@ -31,15 +31,20 @@ type Props = {
     setFavourites? : (movies : IMovie[] | ((movies : IMovie[]) => IMovie[])) => void,
     fetchFavourites? : () => void,
     fullPage? : boolean,
+    category?: string,
 }
 const MovieCard = (props : Props) => {
-    const { movie, fullPage, isFavourite, setFavourites, fetchFavourites } = props;
+    const { movie, fullPage, isFavourite, category, fetchFavourites } = props;
     
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
 
     const [toastMessage, setToastMessage] = useState<string>('');
     const [show, setShow] = useState<boolean>(false);
+
+    if (movie.title === 'Dangal') {
+        console.log('id', movie.id);
+    }
 
     const addToFavourite = () => {
         setLoading(true);
@@ -65,6 +70,8 @@ const MovieCard = (props : Props) => {
                     setToastMessage('Already Favourite')
                     setShow(true);
                 } else setError(error as Error);
+                setToastMessage('Already unfavoured it')
+                setShow(true);
             } finally {
                 setLoading(false);
             }
@@ -93,6 +100,8 @@ const MovieCard = (props : Props) => {
                         setToastMessage('Already unfavoured it')
                         setShow(true);
                     } else setError(error as Error);
+                    setToastMessage('Already unfavoured it')
+                    setShow(true);
                 } finally {
                     setLoading(false);
                 }
@@ -105,7 +114,7 @@ const MovieCard = (props : Props) => {
                 <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
                     <Toast.Body>{toastMessage}</Toast.Body>
                 </Toast>
-                <Link to={`${movie.id}`} className={classnames("text-decoration-none", {'pe-none': fullPage})}>
+                <Link to={`${category}/${movie.id}`} className={classnames("text-decoration-none", {'pe-none': fullPage})}>
                     <Card.Img
                         variant="top"
                         src={movie.posterurl || 'images/default-movie-image.jpg'}
@@ -118,7 +127,7 @@ const MovieCard = (props : Props) => {
                             <p>Duration: {movie.duration ? moment.duration(movie.duration).humanize() : 'Unknown'}</p>
                             <p>Content Rating: {movie.contentRating || 'N/A'}</p>
                             {
-                                !setFavourites && 
+                                fullPage && 
                                 <>
                                     <p>{movie.storyline}</p>
                                 </>
@@ -126,36 +135,33 @@ const MovieCard = (props : Props) => {
                         </Card.Text>
                     </Card.Body>
                 </Link>
-                {
-                    setFavourites &&
-                    <Card.Footer className="text-muted">
-                        <Button
-                            className="favourite-button text-decoration-none"
-                            variant="link"
-                            onClick={isFavourite ? removeFromFavourite : addToFavourite}
-                            style={{ outline: 'none', boxShadow: 'none' }}
-                        >
-                            {
-                                loading &&
-                                <Spinner animation="grow" variant={classnames({'danger': !isFavourite, 'warning': isFavourite})} role="status" size="sm">
-                                    <span className="visually-hidden">Loading...</span>
-                                </Spinner>
-                            }
-                            {
-                                !loading && error && (
-                                    <Alert variant="warning">{error.message}</Alert>
-                                )
-                            }
-                            {
-                                !loading && !error && movie &&
-                                <>
-                                    <FontAwesomeIcon icon={isFavourite ? solidHeart : outlineHeart} className="text-danger" />
-                                    <span className="visually-hidden">Add to Favourites</span>
-                                </>
-                            }
-                        </Button>
-                    </Card.Footer>
-                }
+                <Card.Footer className="text-muted">
+                    <Button
+                        className="favourite-button text-decoration-none"
+                        variant="link"
+                        onClick={isFavourite ? removeFromFavourite : addToFavourite}
+                        style={{ outline: 'none', boxShadow: 'none' }}
+                    >
+                        {
+                            loading &&
+                            <Spinner animation="grow" variant={classnames({'danger': !isFavourite, 'warning': isFavourite})} role="status" size="sm">
+                                <span className="visually-hidden">Loading...</span>
+                            </Spinner>
+                        }
+                        {
+                            !loading && error && (
+                                <Alert variant="warning">{error.message}</Alert>
+                            )
+                        }
+                        {
+                            !loading && !error && movie &&
+                            <>
+                                <FontAwesomeIcon icon={isFavourite ? solidHeart : outlineHeart} className="text-danger" />
+                                <span className="visually-hidden">Add to Favourites</span>
+                            </>
+                        }
+                    </Button>
+                </Card.Footer>
             </Card>
         </>
     );

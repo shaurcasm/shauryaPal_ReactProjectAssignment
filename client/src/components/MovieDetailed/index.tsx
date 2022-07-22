@@ -1,22 +1,20 @@
 import { useEffect, useState } from 'react';
 import { Container, Spinner, Alert, Button } from 'react-bootstrap';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { Categories } from '../../models/ICategory';
 import IMovie from '../../models/IMovie';
 import { getMovieById } from '../../services/movies';
 import MovieCard from '../MovieCard';
 
-interface LocationState {
-    category : Categories;
-};
 const MovieDetailed = () => {
     const params = useParams();
     const id = params.id as string;
+    const category = params.category as Categories;
 
-    const location = useLocation();
+    /* const location = useLocation();
     const state = location.state as LocationState;
-    const { category = Categories.MoviesComing } = state || {};
+    const { category } = state || {}; */
 
     const navigation = useNavigate();
     const goBack = () => navigation(-1);
@@ -26,19 +24,21 @@ const MovieDetailed = () => {
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
-        console.log('id', id);
         console.log('category', category);
-        (async () => {
-            try {
-                const movie = await getMovieById(category, id);
+        console.log('id', id);
+        if (category && id) {
+            (async () => {
+                try {
+                    const movie = await getMovieById(category, id);
 
-                setMovie(movie);                
-            } catch (error) {
-                setError(error as Error);
-            } finally {
-                setLoading(false);
-            }
-        })();
+                    setMovie(movie);                
+                } catch (error) {
+                    setError(error as Error);
+                } finally {
+                    setLoading(false);
+                }
+            })();
+        }
     }, [category, id]);
 
     return (

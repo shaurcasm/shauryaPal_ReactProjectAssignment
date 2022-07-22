@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Container, Row, Col, Spinner, Alert } from 'react-bootstrap';
+import { useState, useEffect, useCallback, ChangeEvent } from 'react';
+import { Container, Row, Col, Spinner, Alert, InputGroup, Form } from 'react-bootstrap';
 
 import ICategory, { Categories } from '../../models/ICategory';
 import IMovie from '../../models/IMovie';
@@ -12,9 +12,10 @@ interface Props extends ICategory {
     fetchFavourites: () => void,
 }
 const Movies = (props : Props) => {
-    const { category, favourites, setFavourites, fetchFavourites } = props;
+    const { category, favourites, fetchFavourites } = props;
 
     const [movies, setMovies] = useState<IMovie[]>([]);
+    const [filteredMovies, setFilteredMovies] = useState<IMovie[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
 
@@ -22,9 +23,23 @@ const Movies = (props : Props) => {
         return favourites.some(fav => fav.title === title);
     }, [favourites]);
 
+    const handleSearchChange = (event : ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+
+        if (value) {
+            const newMovies = movies.filter(movie => movie.title.toLowerCase().includes(value.toLowerCase()));
+            setFilteredMovies(newMovies);
+        } else {
+            setFilteredMovies(movies);
+        }
+    }
+
+    useEffect(() => {
+        setFilteredMovies(movies);
+    }, [movies]);
+
     useEffect(() => {
         if(category !== Categories.Favourite) {
-            console.log('category', category);
             setError(null);
             setLoading(true);
             (async () => {
@@ -46,8 +61,6 @@ const Movies = (props : Props) => {
         }
     }, [category, favourites])
 
-    useEffect(() => console.log('Movies', movies), [movies]);
-
     return (
         <Container fluid className='justify-content-center align-items-center py-4'>
             {
@@ -63,16 +76,34 @@ const Movies = (props : Props) => {
             }
             {
                 !loading && !error &&
-                <Row xs={1} md={2} lg='auto' className="my-n3 justify-content-center" >
-                    {
-                        movies.length > 0 &&
-                        movies.map(movie => (
-                            <Col key={movie.id} className="py-3">
-                                <MovieCard movie={movie} isFavourite={isFavourite(movie.title)} setFavourites={setFavourites} fetchFavourites={fetchFavourites} />
-                            </Col>
-                        ))
-                    }
-                </Row>
+                <>
+                    <Row xs={1} lg={2} className="justify-content-center">
+                        <Col>
+                            <InputGroup className="mb-3">
+                                <Form.Control
+                                    placeholder="Search Movie"
+                                    aria-label="Search Movie"
+                                    onChange={handleSearchChange}
+                                />
+                            </InputGroup>
+                        </Col>
+                    </Row>
+                    <Row xs={1} md={2} lg='auto' className="my-n3 justify-content-center" >
+                        {
+                            filteredMovies.length > 0 &&
+                            filteredMovies.map(movie => (
+                                <Col key={movie.id} className="py-3">
+                                    <MovieCard
+                                        movie={movie}
+                                        category={category}
+                                        isFavourite={isFavourite(movie.title)}
+                                        fetchFavourites={fetchFavourites}
+                                    />
+                                </Col>
+                            ))
+                        }
+                    </Row>
+                </>
             }
         </Container>
     )

@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="movies" replace />} />
         <Route path="movies" element={<Landing />} />
-        <Route path="movies/:id" element={<MovieDetailed />} />
+        <Route path="movies/:category/:id" element={<MovieDetailed />} />
       </Routes>
     </div>
   );
